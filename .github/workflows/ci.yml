@@ -19,6 +19,6 @@ jobs:
     container: vincentlau77/blog_php
     steps:
       - name: install composer
-      uses: composer install
+        uses: composer install
       - name: script
-      uses: bin/phpunit
+        uses: bin/phpunit
