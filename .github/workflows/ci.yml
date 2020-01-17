@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     container: vincentlau77/blog_php
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
       - name: install composer
         run: composer install
       - name: script
