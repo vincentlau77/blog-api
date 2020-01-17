@@ -17,6 +17,8 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     container: vincentlau77/blog_php
+    needs:
+        - hadolint
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
@@ -24,3 +26,20 @@ jobs:
         run: composer install
       - name: script
         run: bin/phpunit
+
+  deploy:
+    name: deploy_heroku
+    runs-on: ubuntu-latest
+    needs:
+        - test_unit
+    steps:
+      - name: checkout source
+        uses: actions/checkout@v2
+      - name: setup ruby
+        uses: actions/setup-ruby@v1
+        with:
+            ruby-version: '2.x'
+      - name: gem install dpl
+        run: gem install dpl
+      - name: deploy heroku
+        run: dpl --provider=heroku --app=${{ secret.HEROKU_APP }} --api-key=${{ secret.HEROKU_STAGING_API_KEY }}
