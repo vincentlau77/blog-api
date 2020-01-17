@@ -12,3 +12,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Checking image Best Practices
         run: hadolint Dockerfile
+
+  test_unit:
+    name: test
+    runs-on: ubuntu-lastest
+    container: vincentlau77/blog_php
+    steps:
+      - name: install composer
+      uses: composer install
+      - name: script
+      uses: bin/phpunit
